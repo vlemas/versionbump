@@ -64,20 +64,31 @@ def updateFile(filename, version):
 
 parser = OptionParser()
 parser.add_option("-f", "--file", dest='fname', help='name of the version text file')
-parser.add_option("-v", "--version", dest='version', help='new version number to be added to the file')
+parser.add_option("-v", "--version", dest='newversion', help='new version number to be added to the file')
 (opts, args) = parser.parse_args()
 if opts.fname:
     filename = opts.fname
 print('Updating version file: '+filename)
-specifiedversion = None
-if opts.version:
-    specifiedversion = opts.version
-    if np.match(specifiedversion):
-        print('Updating version file with version '+specifiedversion)
-        updateFile(filename, specifiedversion)
+specifiednewversion = None
+if opts.newversion:
+    specifiednewversion = opts.newversion
+    if np.match(specifiednewversion):
+        print('Updating version file with version '+specifiednewversion)
+        updateFile(filename, specifiednewversion)
     else:
-        print(specifiedversion+' is not a valid version, no action taken')
+        print(specifiednewversion+' is not a valid version, no action taken')
         #HOW DO I GET OUT FROM HERE
 else:
-    updateFile(filename, specifiedversion)
+    #new version not supplied, prompt for it
+    invalidVersion = True
+    while invalidVersion:
+        inputversion = input('Please provide a new version, format <major>.<minor>.<patch>-<qualifier>')
+        if np.match(inputversion):
+            print('Updating version file with version '+inputversion)
+            invalidVersion = False
+            specifiednewversion = inputversion
+        else:
+            print('new version is not in the correct format')
+            
+    updateFile(filename, specifiednewversion)
  

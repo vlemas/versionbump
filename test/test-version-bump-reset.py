@@ -1,6 +1,12 @@
 #a script to reset the test file
 import os
-filename = '.\VERSIONsss.txt'
+from optparse import OptionParser
+filename = '.\VERSION.txt'
+parser = OptionParser()
+parser.add_option("-f", "--file", dest='fname', help='name of the version text file')
+(opts, args) = parser.parse_args()
+if opts.fname:
+    filename = opts.fname
 print('Recreating '+filename+' for version-bump.py')
 try:
     os.remove(filename)
