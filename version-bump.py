@@ -16,11 +16,24 @@ class GitError(Exception):
     def _init_(self, errorCode, message):
         print("GitError " + str(message))
 
+def findFile(filename):
+    #read all files in directory
+    print("Checking that "+filename+" exists")
+    lcfilename = filename.lower()
+    allfiles = os.listdir()
+    
+    for afile in allfiles:
+        if lcfilename == afile.lower():
+            return afile
+    print("Oops "+filename+"  does not exist")
+    raise FileNotFoundError("filename")
+
         
-def updateFile(filename, nextversion):
+def updateFile(uncasedfilename, nextversion):
     foundit = False
     tagversion = None
-    try:  
+    try:
+        filename = findFile(uncasedfilename)
         with open(filename, 'r', encoding='utf-8') as v, open('NEW'+filename, 'w', encoding='utf-8') as nv:
             print('write data to '+'NEW'+filename)
             for read_data in v:
@@ -102,6 +115,7 @@ def createTag(version):
 #argv = sys.argv
 #print('Argument List:', str(argv))
 
+    
 parser = OptionParser()
 parser.add_option("-f", "--file", dest='fname', help='name of the version text file')
 parser.add_option("-v", "--version", dest='newversion', help='new version number to be added to the file')
