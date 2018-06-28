@@ -21,3 +21,4 @@ Specifically the script will:
   * The script will output to stdout a basic overview of the operations it has performed
   * If there is an error, the script will exit with a non-zero return code
   * An alternative filename for the version file can be specified with the `-f <filename>` parameter
+  * The new version number can be specified with the `-v <version>` parameter
